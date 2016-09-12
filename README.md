@@ -1,5 +1,4 @@
-# Fall_2016_Algorithm
-Fall_2016_Algorithm
+# [Fall, 2016] CNU Algorithm Class
 
 ## Contents
 ### [Hw 01]
