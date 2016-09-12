@@ -1,49 +1,61 @@
-*.class
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+.settings/
+*/.settings
 
-# Package Files #
-*.jar
-*.war
-*.ear
+.loadpath
+.recommenders
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+.idea
+*./idea
 
-# Prerequisites
-*.d
+.DS_Store
+*/.DS_Store
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# Eclipse Core
+.project
+*/.project
 
-# Precompiled Headers
-*.gch
-*.pch
+# External tool builders
+.externalToolBuilders/
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# Locally stored "Eclipse launch configurations"
+*.launch
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# PyDev specific (Python IDE for Eclipse)
+*.pydevproject
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# CDT-specific (C/C++ Development Tooling)
+.cproject
 
-# Debug files
-*.dSYM/
-*.su
+# JDT-specific (Eclipse Java Development Tools)
+*/.classpath
+.classpath
+
+# Java annotation processor (APT)
+.factorypath
+
+# PDT-specific (PHP Development Tools)
+.buildpath
+
+# sbteclipse plugin
+.target
+
+# Tern plugin
+.tern-project
+
+# TeXlipse plugin
+.texlipse
+
+# STS (Spring Tool Suite)
+.springBeans
+
+# Code Recommenders
+.recommenders/
