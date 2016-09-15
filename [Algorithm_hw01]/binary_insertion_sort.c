@@ -6,11 +6,12 @@ int isdigit(char c);
 int readint(char c, FILE * fp);
 double timediff(clock_t start, clock_t end);
 void insertion_sort(int * arr, int n);
+int binary_search(int * a, int i, int j, int key);
 
 int main()
 {
     char * input_file_name = "./input/data02.txt";
-    char * output_file_name = "hw01_01_201202154_insertion.txt";
+    char * output_file_name = "hw01_01_201202154_binary_insertion.txt";
 
     FILE * ifp = fopen(input_file_name,"rt");
     FILE * ofp = fopen(output_file_name,"wt");
@@ -19,7 +20,7 @@ int main()
 
     int * digit_array;
     int digit, index = 1, size = 10;
-    
+
     if(ifp == NULL || ofp == NULL) {
         printf("File I/O error..\n");
         return 0;
@@ -55,7 +56,7 @@ int main()
     puts("");
 
     free(digit_array);
-    
+
     fclose(ifp);
     fclose(ofp);
 
@@ -86,23 +87,27 @@ double timediff(clock_t start, clock_t end)
 
 void insertion_sort(int * a, int n)
 {
-    int i,j,key;
+    int i, j, key, find_index;
     clock_t start, end;
     double elapsed = 0;
 
-    puts("\n\nNow!! We're gonna insertion_sort");
+    puts("\n\nNow!! We're gonna insertion_sort using binary_search");
 
     for(int j=2; j<=n; j++) {
 
         start = clock();
 
+        /* Find index using Binary search */
         key = a[j];
         i = j-1;
-        while(i > 0 && a[i] > key) {
+        find_index = binary_search(a,1,i,key);
+
+        /* Shift element */
+        while(i >= find_index) {
             a[i+1] = a[i];
             i--;
         }
-        a[i+1] = key;
+        a[find_index] = key;
 
         end = clock();
 
@@ -116,4 +121,17 @@ void insertion_sort(int * a, int n)
     puts("=========================================");
 
     printf("Elapsed time for sorting : %.5fsec\n",elapsed);
+}
+
+int binary_search(int * a, int i, int j, int key) {
+    int cur;
+    while(1) {
+        cur = (i+j) / 2;
+        if(i > j) return i;
+        if(a[cur] < key)
+            i = cur + 1;
+        else if(a[cur] > key)
+            j = cur - 1;
+        else return cur;
+    }
 }
