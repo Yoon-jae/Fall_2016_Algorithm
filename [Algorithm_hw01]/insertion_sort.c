@@ -28,7 +28,7 @@ int main()
     digit_array = (int *)malloc(sizeof(int) * size);
 
     /* File input part */
-    printf("Input file from %s ..\n",input_file_name);
+    printf("\nInput file from %s ..\n",input_file_name);
 
     while((ch = fgetc(ifp)) != EOF) {
         digit = readint(ch,ifp);
@@ -36,7 +36,6 @@ int main()
         if(index == size-1) {
             size *= 2;
             digit_array = (int *)realloc(digit_array, sizeof(int) * size);
-            printf("\nRealloc! Now size is %d\n",size);
         }
         if(index%10000==0) printf("%d\n",index);
     }
@@ -113,7 +112,7 @@ void insertion_sort(int * a, int n)
     }
 
     puts("\nComplete insertion_sort !!\n");
-    puts("=========================================");
-
+    puts("=========================================\n");
     printf("Elapsed time for sorting : %.5fsec\n",elapsed);
+    puts("\n=========================================\n");
 }

@@ -5,7 +5,7 @@
 int isdigit(char c);
 int readint(char c, FILE * fp);
 double timediff(clock_t start, clock_t end);
-void insertion_sort(int * arr, int n);
+void binary_insertion_sort(int * arr, int n);
 int binary_search(int * a, int i, int j, int key);
 
 int main()
@@ -29,7 +29,7 @@ int main()
     digit_array = (int *)malloc(sizeof(int) * size);
 
     /* File input part */
-    printf("Input file from %s ..\n",input_file_name);
+    printf("\nInput file from %s ..\n",input_file_name);
 
     while((ch = fgetc(ifp)) != EOF) {
         digit = readint(ch,ifp);
@@ -37,13 +37,12 @@ int main()
         if(index == size-1) {
             size *= 2;
             digit_array = (int *)realloc(digit_array, sizeof(int) * size);
-            printf("\nRealloc! Now size is %d\n",size);
         }
         if(index%10000==0) printf("%d\n",index);
     }
 
     /* Insertion sort */
-    insertion_sort(digit_array, index-1);
+    binary_insertion_sort(digit_array, index-1);
 
     /* File output part */
     for(int i=1; i<index; i++) {
@@ -85,13 +84,13 @@ double timediff(clock_t start, clock_t end)
     return (double)(end - start) / CLOCKS_PER_SEC;
 }
 
-void insertion_sort(int * a, int n)
+void binary_insertion_sort(int * a, int n)
 {
     int i, j, key, find_index;
     clock_t start, end;
     double elapsed = 0;
 
-    puts("\n\nNow!! We're gonna insertion_sort using binary_search");
+    puts("\n\nNow!! We're gonna binary_insertion_sort");
 
     for(int j=2; j<=n; j++) {
 
@@ -118,9 +117,9 @@ void insertion_sort(int * a, int n)
     }
 
     puts("\nComplete insertion_sort !!\n");
-    puts("=========================================");
-
+    puts("=========================================\n");
     printf("Elapsed time for sorting : %.5fsec\n",elapsed);
+    puts("\n=========================================\n");
 }
 
 int binary_search(int * a, int i, int j, int key) {
