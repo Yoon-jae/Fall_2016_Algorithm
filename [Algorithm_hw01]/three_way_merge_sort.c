@@ -5,16 +5,16 @@
 int is_digit(char c);
 int read_int(char c, FILE * fp);
 double time_diff(clock_t start, clock_t end);
-void merge_sort(int * a, int i, int j);
-void merge(int * a, int i, int mid, int j);
+void three_way_merge_sort(int * a, int i, int j);
+void merge(int * a, int i, int first, int second, int j);
 
 int merge_count;
 
 int main()
 {
-    //char * input_file_name = "./input/data02.txt";
+    char * input_file_name = "./input/data02.txt";
     //char * input_file_name = "./input/hw02_uk.txt";
-    char * input_file_name = "./input/in.txt";
+    //char * input_file_name = "./input/in.txt";
     char * output_file_name = "hw01_01_201202154_merge.txt";
 
     FILE * ifp = fopen(input_file_name,"rt");
@@ -48,15 +48,15 @@ int main()
         if(index%10000==0) printf("%d\n",index);
     }
 
-    puts("\n\nNow!! We're gonna merge_sort");
+    puts("\n\nNow!! We're gonna three_way_merge_sort");
 
     merge_count = 0;
 
     start = clock();
 
     /* Merge sort */
-    merge_sort(digit_array, 1, index-1);
-    
+    three_way_merge_sort(digit_array, 1, index-1);
+
     end = clock();
 
     elapsed = time_diff(start,end);
@@ -106,28 +106,43 @@ double time_diff(clock_t start, clock_t end)
     return (double)(end - start) / CLOCKS_PER_SEC;
 }
 
-void merge_sort(int * a, int i, int j)
+void three_way_merge_sort(int * a, int i, int j)
 {
-    int mid = (i+j) / 2;
+    int size = j - i + 1;
+    int first = i + size / 3;
+    int second = i + size / 3 * 2;
 
-    if(i < j) {
-        merge_sort(a, i, mid);
-        merge_sort(a, mid + 1, j);
-        merge(a, i, mid, j);
+    int temp;
+
+    if(size <= 1) return;
+    else if(size == 2) {
+        if(a[i] > a[j]) {
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    } else {
+        three_way_merge_sort(a, i, first);
+        three_way_merge_sort(a, first + 1, second);
+        three_way_merge_sort(a, second + 1, j); 
+
+        merge(a, i, first, second, j);
     }
 }
 
-void merge(int * a, int i, int mid, int j) {
+void merge(int * a, int i, int first, int second, int j) {
 
     int idx;
-    
-    /* Array pointer value */
-    int lp = 0, rp = 0, ap = i;
 
-    int left_size = mid - i + 1;
-    int right_size = j - mid;
+    /* Array pointer value */
+    int lp = 0, mp = 0, rp = 0, ap = i;
+
+    int left_size = first - i + 1;
+    int mid_size = second - first;
+    int right_size = j - second;
 
     int * left = (int *)malloc(sizeof(int) * left_size);
+    int * mid = (int *)malloc(sizeof(int) * mid_size);
     int * right = (int *)malloc(sizeof(int) * right_size);
 
     merge_count++;
@@ -135,23 +150,61 @@ void merge(int * a, int i, int mid, int j) {
     /* Copy element */
     for(idx = 0; idx < left_size; idx++)
         left[idx] = a[i + idx];
+    for(idx = 0; idx < mid_size; idx++)
+        mid[idx] = a[first + 1 + idx];
     for(idx = 0; idx < right_size; idx++)
-        right[idx] = a[mid + 1 + idx];
+        right[idx] = a[second + 1 + idx];
 
-    /* Compare left, right array's element */
-    while(lp < left_size && rp < right_size) {
-        if(left[lp] <= right[rp])
-            a[ap++] = left[lp++];
-        else
-            a[ap++] = right[rp++];
+    /* Compare left, mid, right array's element */
+
+    while(lp < left_size && mp < mid_size && rp < right_size) {
+        if(left[lp] <= mid[mp]) {
+            if(left[lp] <= right[rp])
+                a[ap++] = left[lp++];
+            else
+                a[ap++] = right[rp++];
+        } else {    /* mid[mp] < left[lp] */
+            if(mid[mp] <= right[rp])
+                a[ap++] = mid[mp++];
+            else
+                a[ap++] = right[rp++];
+        }
     }
 
     /* Managing remain elements */ 
+    if(lp == left_size) {
+        while(mp < mid_size && rp < right_size) {
+            if(mid[mp] <= right[rp])
+                a[ap++] = mid[mp++];
+            else
+                a[ap++] = right[rp++];
+        }
+    }
+    if(mp == mid_size) {
+        while(lp < left_size && rp < right_size) {
+            if(left[lp] <= right[rp])
+                a[ap++] = left[lp++];
+            else
+                a[ap++] = right[rp++];
+        }
+    }
+    if(rp == right_size) {
+        while(lp < left_size && mp < mid_size) {
+            if(left[lp] <= mid[mp])
+                a[ap++] = left[lp++];
+            else
+                a[ap++] = mid[mp++];
+        }
+    }
+
     while(lp < left_size)
         a[ap++] = left[lp++];
-    while(rp < right_size)
+    while(mp < mid_size)
+        a[ap++] = mid[mp++];
+    while(lp < left_size)
         a[ap++] = right[rp++];
 
     free(left);
+    free(mid);
     free(right);
 }
