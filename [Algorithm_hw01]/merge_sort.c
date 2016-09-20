@@ -12,9 +12,7 @@ int merge_count;
 
 int main()
 {
-    //char * input_file_name = "./input/data02.txt";
-    //char * input_file_name = "./input/hw02_uk.txt";
-    char * input_file_name = "./input/in.txt";
+    char * input_file_name = "./input/data02.txt";
     char * output_file_name = "hw01_01_201202154_merge.txt";
 
     FILE * ifp = fopen(input_file_name,"rt");
