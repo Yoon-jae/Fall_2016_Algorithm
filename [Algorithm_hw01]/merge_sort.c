@@ -2,14 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX(a,b) (a) >= (b)? (a):(b)
-#define MIN(a,b) (a) < (b)? (a):(b)
-
 int is_digit(char c);
 int read_int(char c, FILE * fp);
 double time_diff(clock_t start, clock_t end);
 void merge_sort(int * a, int i, int j);
-void merge(int * a, int i, int j, int mid);
+void merge(int * a, int i, int mid, int j);
 
 int main()
 {
@@ -50,14 +47,14 @@ int main()
 
     puts("\n\nNow!! We're gonna merge_sort");
 
+    start = clock();
+
     /* Merge sort */
     merge_sort(digit_array, 1, index-1);
+    
+    end = clock();
 
-    puts("S O R T E D");
-    for(int i=1; i<index; i++) {
-        printf("%d ",digit_array[i]);
-    }
-    puts("");
+    elapsed = time_diff(start,end);
 
     /* File output part */
     for(int i=1; i<index; i++) {
@@ -106,60 +103,47 @@ double time_diff(clock_t start, clock_t end)
 void merge_sort(int * a, int i, int j)
 {
     int mid = (i+j) / 2;
-    printf("start,mid,end : %d,%d,%d\n",i,mid,j);
-
 
     if(i < j) {
         merge_sort(a, i, mid);
-
         merge_sort(a, mid + 1, j);
-
-        merge(a, i, j, mid);
+        merge(a, i, mid, j);
     }
 }
 
-void merge(int * a, int i, int j, int mid) {
+void merge(int * a, int i, int mid, int j) {
 
-    int * new = (int *)malloc(sizeof(int) * (j-i+1));
+    int idx;
+    
+    /* Array pointer value */
+    int lp = 0, rp = 0, ap = i;
 
-    int np = i;
-    int fp = i;
-    int sp = mid + 1;
+    int left_size = mid - i + 1;
+    int right_size = j - mid;
 
-    puts("Before merge");
-    for(int idx = i; idx<=j; idx++)
-        printf("a[%d] : %d\n",idx,a[idx]);
-    puts("====================");
+    int * left = (int *)malloc(sizeof(int) * left_size);
+    int * right = (int *)malloc(sizeof(int) * right_size);
 
-    printf("fp,sp,np : %d,%d,%d\n",fp,sp,np);
-    if(fp == mid && sp == j) {
-        puts("Size 1 element");
-        new[fp] = MIN(a[fp],a[sp]);
-        new[sp] = MAX(a[fp],a[sp]);
-    } else {
-        while(fp != mid+1 || sp != j+1) {
-            printf("While loop start -> fp,sp,np : %d,%d,%d\n",fp,sp,np);
-            if(fp == mid + 1) 
-                new[np++] = a[sp++];
-            else if(sp == j + 1) 
-                new[np++] = a[fp++];
-            else {
-                if(a[fp] <= a[sp]) 
-                    new[np++] = a[fp++];
-                else 
-                    new[np++] = a[sp++];
-            }
-            printf("While loop end -> fp,sp,np : %d,%d,%d\n",fp,sp,np);
-        }
+    /* Copy element */
+    for(idx = 0; idx < left_size; idx++)
+        left[idx] = a[i + idx];
+    for(idx = 0; idx < right_size; idx++)
+        right[idx] = a[mid + 1 + idx];
+
+    /* Compare left, right array's element */
+    while(lp < left_size && rp < right_size) {
+        if(left[lp] <= right[rp])
+            a[ap++] = left[lp++];
+        else
+            a[ap++] = right[rp++];
     }
 
-    for(int idx = j; idx >= i; idx--)
-        a[idx] = new[idx];
+    /* Remain elements */ 
+    while(lp < left_size)
+        a[ap++] = left[lp++];
+    while(rp < right_size)
+        a[ap++] = right[rp++];
 
-    free(new);
-
-    puts("After merge");
-    for(int idx = i; idx <= j; idx++)
-        printf("a[%d] : %d\n",idx,a[idx]);
-    puts("====================");
+    free(left);
+    free(right);
 }
