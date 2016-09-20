@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-int isdigit(char c);
-int readint(char c, FILE * fp);
-double timediff(clock_t start, clock_t end);
+int is_digit(char c);
+int read_int(char c, FILE * fp);
+double time_diff(clock_t start, clock_t end);
 void insertion_sort(int * arr, int n);
 
 int main()
@@ -31,7 +31,7 @@ int main()
     printf("\nInput file from %s ..\n",input_file_name);
 
     while((ch = fgetc(ifp)) != EOF) {
-        digit = readint(ch,ifp);
+        digit = read_int(ch,ifp);
         digit_array[index++] = digit;
         if(index == size-1) {
             size *= 2;
@@ -61,24 +61,24 @@ int main()
     return 0;
 }
 
-int isdigit(char c)
+int is_digit(char c)
 {
     if('0' <= c && c <= '9') {
         return 1;
     } else return 0;
 }
 
-int readint(char c, FILE * fp)
+int read_int(char c, FILE * fp)
 {
     int digit = c - '0';
     char ch;
-    while(isdigit(ch = fgetc(fp))) {
+    while(is_digit(ch = fgetc(fp))) {
         digit = digit * 10 + ch - '0';
     }
     return digit;
 }
 
-double timediff(clock_t start, clock_t end)
+double time_diff(clock_t start, clock_t end)
 {
     return (double)(end - start) / CLOCKS_PER_SEC;
 }
@@ -105,7 +105,7 @@ void insertion_sort(int * a, int n)
 
         end = clock();
 
-        elapsed += timediff(start, end);
+        elapsed += time_diff(start, end);
 
         if(j%10000 == 0)
             printf("Sorting..  %d\n",j);
