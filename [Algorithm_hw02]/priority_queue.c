@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h> 
-#define MAX_SIZE 301
+
+#define MAX_SIZE 1001 
+#define ROOT 1
 
 typedef struct _priority_queue {
-   char key[100];
-   int value;
+    char key[100];
+    int value;
 } priority_queue;
 
 /* File Input */
@@ -14,14 +16,18 @@ int read_int(char ch, FILE * fp);
 /* Max Heap */
 void max_heapify(int i);
 void build_max_heap();
-void insert(priority_queue * x);
+void insert();
 void max();
-int  extract_max();
-void increase_key(int x, int k);
+priority_queue extract_max();
+void increase_value(int x, int value);
 void delete(int x);
 
 void swap_pq(priority_queue * a, priority_queue * b);
-void printHeap();
+void print_heap();
+int get_command();
+
+int is_empty();
+int is_full();
 
 priority_queue pq[MAX_SIZE];
 int size;
@@ -32,13 +38,18 @@ int main() {
     FILE * fp = fopen(input_file_name,"rt");
 
     char ch; 
-    int i,j;
+
+    int i;
+    int command;
+
+    int x;
+    int value;
 
     if(fp == NULL) {
         printf("File I/O error..\n");
         return 0;
     }
-    
+
     size = 0;
 
     /* File Input part */
@@ -57,12 +68,78 @@ int main() {
             pq[size].key[i++] = ch;
         pq[size].key[i] = '\0';
 
-        //printf("[%2d] key,value : (%s,%d)\n",size,pq[size].key,pq[size].value);
     }
 
-
     build_max_heap();
-    printHeap();
+    print_heap();
+
+    command = get_command();
+
+    while(command != 6) {
+        switch(command) {
+            /*
+               printf("1. Add elements(Key, Value)\n");
+               printf("2. Get max element\n");
+               printf("3. Extract max element\n");
+               printf("4. Increase value in node[x]\n");
+               printf("5. Delete node[x]\n");
+               printf("6. Exit\n");
+             */
+            case 1:
+                if(is_full())
+                    puts("#####  Heap is full now. #####");
+                else insert();
+                break;
+
+            case 2:
+                if(is_empty())
+                    puts("#####  Heap is empty now. #####");
+                else max();
+                break;
+
+            case 3:
+                if(is_empty()) 
+                    puts("#####  Heap is empty now. #####");
+                else {
+                    priority_queue max_element = extract_max();
+                    printf("\n#####  Max element (Key, value) : (%s, %d) #####\n",max_element.key,max_element.value);
+                }
+                break;
+
+            case 4:
+                printf("Node number : ");
+                scanf("%d",&x);
+                if(x > size) {
+                    printf("#####  node[%d] is not in here. #####\n",x);
+                    break;
+                }
+                printf("New value of node[%d] (more than %d): ", x, pq[x].value);
+                scanf("%d",&value);
+
+                increase_value(x, value);
+                break;
+
+            case 5:
+                printf("Node number : ");
+                scanf("%d",&x);
+                if(x > size) {
+                    printf("#####  node[%d] is not in here. #####\n",x);
+                    break;
+                }
+                delete(x);
+                break;
+
+            case 6:
+                puts("Exit program..");
+                exit(1);
+                break;
+
+            default:
+                break;
+        }
+        print_heap();
+        command = get_command();
+    }
 }
 
 int is_digit(char ch) {
@@ -99,18 +176,48 @@ void build_max_heap() {
         max_heapify(i);
 }
 
-void insert(priority_queue * x);
+void insert() {
+    int index = ++size;
+
+    printf("Key(char size : 1 ~ 100) : ");
+    scanf("%s",pq[index].key);
+    printf("Value(1 ~ 1000) : ");
+    scanf("%d",&pq[index].value);
+
+    while((index > ROOT) && (pq[index].value > pq[index/2].value)) {
+        swap_pq(&pq[index], &pq[index/2]);
+        index /= 2;
+    }
+}
 
 void max() {
-    printf("Max element's (Key, value) : (%s, %d)", pq[size].key,
+    printf("\n#####  Max element's (Key, value) : (%s, %d) #####\n", pq[size].key,
             pq[size].value);
 }
 
-int extract_max();
+priority_queue extract_max() {
+    priority_queue element = pq[ROOT];
+    swap_pq(&pq[ROOT], &pq[size--]);
 
-void increase_key(int x, int k);
+    max_heapify(ROOT);
 
-void delete(int x);
+    return element;
+}
+
+void increase_value(int x, int value) {
+    pq[x].value = value;
+    while((x > ROOT) && (pq[x].value > pq[x/2].value)) {
+        swap_pq(&pq[x], &pq[x/2]);
+        x /= 2;
+    }
+}
+
+void delete(int x) {
+    swap_pq(&pq[x], &pq[size]);
+    size--;
+    max_heapify(x);
+    printf("#####  Completely deleted node[%d] #####\n",x);
+}
 
 void swap_pq(priority_queue * a, priority_queue * b) {
     priority_queue temp;
@@ -119,8 +226,10 @@ void swap_pq(priority_queue * a, priority_queue * b) {
     *b = temp;
 }
 
-void printHeap() {
-    printf("node[##] : (Key, Value) -> (leftChild, rightChild)\n");
+void print_heap() {
+    puts("#####  Here is current elements in Max_heap. #####\n");
+    printf("Current heap size : %d\n\n",size);
+    puts("node[##] : (Key, Value) -> (leftChild, rightChild)");
     for(int i=1; i<=size; i++) {
         if(i*2+1 <= size)
             printf("node[%2d] : (%s , %d) -> (%d , %d)\n",i,pq[i].key,pq[i].value,pq[i*2].value,pq[i*2+1].value);
@@ -129,4 +238,27 @@ void printHeap() {
         else
             printf("node[%2d] : (%s , %d)\n",i,pq[i].key,pq[i].value);
     }
+}
+
+int get_command() {
+    int command;
+    puts("=============================");
+    puts("    Enter command key..\n");
+    printf("1. Add elements(Key, Value)\n");
+    printf("2. Get max element\n");
+    printf("3. Extract max element\n");
+    printf("4. Increase value in node[x]\n");
+    printf("5. Delete node[x]\n");
+    printf("6. Exit\n");
+    puts("=============================");
+    scanf("%d",&command);
+    return command;
+}
+
+int is_empty() {
+    return !size;
+}
+
+int is_full() {
+    return (size == MAX_SIZE);
 }
