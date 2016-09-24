@@ -12,7 +12,7 @@ int merge_count;
 
 int main()
 {
-    char * input_file_name = "./input/data02.txt";
+    char * input_file_name = "data02.txt";
     char * output_file_name = "hw01_01_201202154_merge.txt";
 
     FILE * ifp = fopen(input_file_name,"rt");
@@ -22,6 +22,8 @@ int main()
 
     int * digit_array;
     int digit, index = 1, size = 10;
+
+    int i;
 
     clock_t start, end;
     double elapsed = 0;
@@ -52,15 +54,20 @@ int main()
 
     start = clock();
 
-    /* Merge sort */
+    /* Merge
+     * sort
+     * */
     merge_sort(digit_array, 1, index-1);
-    
+
     end = clock();
 
     elapsed = time_diff(start,end);
 
-    /* File output part */
-    for(int i=1; i<index; i++) {
+    /* File
+     * output
+     * part
+     * */
+    for(i=1; i<index; i++) {
         if(i != index-1) {
             fprintf(ofp, "%d,",digit_array[i]);
         } else fprintf(ofp, "%d\n",digit_array[i]);
@@ -118,7 +125,7 @@ void merge_sort(int * a, int i, int j)
 void merge(int * a, int i, int mid, int j) {
 
     int idx;
-    
+
     /* Array pointer value */
     int lp = 0, rp = 0, ap = i;
 
@@ -136,7 +143,8 @@ void merge(int * a, int i, int mid, int j) {
     for(idx = 0; idx < right_size; idx++)
         right[idx] = a[mid + 1 + idx];
 
-    /* Compare left, right array's element */
+    /* Compare left, right array's
+     * element */
     while(lp < left_size && rp < right_size) {
         if(left[lp] <= right[rp])
             a[ap++] = left[lp++];
@@ -153,3 +161,4 @@ void merge(int * a, int i, int mid, int j) {
     free(left);
     free(right);
 }
+

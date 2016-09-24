@@ -9,7 +9,7 @@ void insertion_sort(int * arr, int n);
 
 int main()
 {
-    char * input_file_name = "./input/data02.txt";
+    char * input_file_name = "data02.txt";
     char * output_file_name = "hw01_01_201202154_insertion.txt";
 
     FILE * ifp = fopen(input_file_name,"rt");
@@ -19,7 +19,9 @@ int main()
 
     int * digit_array;
     int digit, index = 1, size = 10;
-    
+
+    int i;
+
     if(ifp == NULL || ofp == NULL) {
         printf("File I/O error..\n");
         return 0;
@@ -43,8 +45,9 @@ int main()
     /* Insertion sort */
     insertion_sort(digit_array, index-1);
 
-    /* File output part */
-    for(int i=1; i<index; i++) {
+    /* File output part
+     * */
+    for(i=1; i<index; i++) {
         if(i != index-1) {
             fprintf(ofp, "%d,",digit_array[i]);
         } else fprintf(ofp, "%d\n",digit_array[i]);
@@ -54,7 +57,7 @@ int main()
     puts("");
 
     free(digit_array);
-    
+
     fclose(ifp);
     fclose(ofp);
 
@@ -91,7 +94,7 @@ void insertion_sort(int * a, int n)
 
     puts("\n\nNow!! We're gonna insertion_sort");
 
-    for(int j=2; j<=n; j++) {
+    for(j=2; j<=n; j++) {
 
         start = clock();
 
@@ -116,3 +119,4 @@ void insertion_sort(int * a, int n)
     printf("Elapsed time for sorting : %.5fsec\n",elapsed);
     puts("\n=========================================\n");
 }
+
