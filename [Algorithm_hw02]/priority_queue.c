@@ -77,12 +77,12 @@ int main() {
     /* Build max heap with input data from text file */
     build_max_heap();
 
-	system ("cls");
+    system ("cls");
     print_heap();
 
     command = get_command();
     while(command != 6) {
-		
+
         puts("");
         switch(command) {
 
@@ -97,38 +97,38 @@ int main() {
 
             case 1:
                 if(is_full())  {
-					system ("cls");
+                    system ("cls");
                     puts("\n*****  Heap is full now. *****");
-				} else insert();
+                } else insert();
                 break;
 
             case 2:
                 if(is_empty()) {
-					system ("cls");
+                    system ("cls");
                     puts("\n*****  Heap is empty now. *****");
-				} else get_max();
+                } else get_max();
                 break;
 
             case 3:
                 if(is_empty()) {
-					system ("cls");
+                    system ("cls");
                     puts("\n*****  Heap is empty now. *****");
-				} else {
+                } else {
                     priority_queue max_element = extract_max();
-					system ("cls");
+                    system ("cls");
                     printf("\n*****  Max element (%s, %d) deleted succesfully.  *****\n",max_element.key, max_element.value);
                 }
                 break;
 
             case 4:
                 if(is_empty()) {
-					system ("cls");
+                    system ("cls");
                     puts("\n*****  Heap is empty now.  *****");
-				} else {
+                } else {
                     printf("Node number : ");
                     scanf("%d",&x);
                     if(x > size) {
-						system ("cls");
+                        system ("cls");
                         printf("*****  node[%d] is not in here.  *****\n",x);
                         break;
                     }
@@ -138,21 +138,21 @@ int main() {
                     if(value > pq[x].value)
                         increase_value(x, value);
                     else {
-						system ("cls");
+                        system ("cls");
                         printf("\n*****  Error : It is less than %d !  *****\n",pq[x].value);
-					}
-				}
+                    }
+                }
                 break;
 
             case 5:
                 if(is_empty()) {
-					system ("cls");
+                    system ("cls");
                     puts("\n*****  Heap is empty now.  *****");
-				} else {
+                } else {
                     printf("Node number : ");
                     scanf("%d",&x);
                     if(x > size) {
-						system ("cls");
+                        system ("cls");
                         printf("\n*****  node[%d] is not in here.  *****\n",x);
                         break;
                     }
@@ -165,7 +165,7 @@ int main() {
                 exit(1);
 
             default:
-				system ("cls");
+                system ("cls");
                 break;
         }
         print_heap();
@@ -239,12 +239,12 @@ void insert() {
         swap_pq(&pq[index], &pq[index/2]);
         index /= 2;
     }
-	system ("cls");
+    system ("cls");
     printf("\n*****  Added (%s, %d) to node[%d]  *****\n",pq[index].key, pq[index].value, index);
 }
 
 void get_max() {
-	system ("cls");
+    system ("cls");
     printf("\n*****  Max element is (%s, %d)  *****\n", pq[ROOT].key, pq[ROOT].value);
 }
 
@@ -268,7 +268,7 @@ priority_queue extract_max() {
  */
 
 void increase_value(int x, int value) {
-	system ("cls");
+    system ("cls");
     printf("\n***** node[%2d] : (%s, %d) changed to ",x, pq[x].key, pq[x].value);
     pq[x].value = value;
     while((x > ROOT) && (pq[x].value > pq[x/2].value)) {
@@ -284,7 +284,7 @@ void increase_value(int x, int value) {
  */ 
 
 void delete_node(int x) {
-	system ("cls");
+    system ("cls");
     printf("\n*****  Completely deleted node[%2d] : (%s, %d)  *****\n",x,pq[x].key,pq[x].value);
     swap_pq(&pq[x], &pq[size]);
     size--;
@@ -337,7 +337,7 @@ void print_heap_in_tree(int node, int l) {
 
 int get_command() {
     int command;
-	char ch;
+    char ch;
     puts("\n=============================");
     puts("    Enter command key..\n");
     printf("1. Add elements(Key, Value)\n");
@@ -347,8 +347,8 @@ int get_command() {
     printf("5. Delete node[x]\n");
     printf("6. Exit\n");
     puts("=============================");
-	ch = getch();
-	command = ch - '0';
+    ch = getch();
+    command = ch - '0';
     return command;
 }
 
