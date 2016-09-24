@@ -1,14 +1,14 @@
 # [Fall, 2016] CNU Algorithm Class
-
-## Contents
-### [hw 01](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw01%5D)
+### Development tools : Visual Studio 2010
+### Contents
+#### [hw 01](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw01%5D)
 1. Insertion sort
 2. Binary insertion sort
 3. Merge sort 
 4. 3-way Merge sort
 
-### [hw 02](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw02%5D)
-#### Max heap with following functions
+#### [hw 02](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw02%5D)
+##### Max heap with following functions
 1. Bulid max heap
 2. Max heapify
 3. Add elment
