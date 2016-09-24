@@ -165,6 +165,7 @@ int main() {
                 exit(1);
 
             default:
+				system ("cls");
                 break;
         }
         print_heap();
