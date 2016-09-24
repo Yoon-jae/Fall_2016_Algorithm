@@ -17,10 +17,10 @@ int read_int(char ch, FILE * fp);
 void max_heapify(int i);
 void build_max_heap();
 void insert();
-void max();
+void get_max();
 priority_queue extract_max();
 void increase_value(int x, int value);
-void delete(int x);
+void delete_node(int x);
 
 void swap_pq(priority_queue * a, priority_queue * b);
 void print_heap();
@@ -105,7 +105,7 @@ int main() {
                 clrscr();
                 if(is_empty())
                     puts("\n*****  Heap is empty now. *****");
-                else max();
+                else get_max();
                 break;
 
             case 3:
@@ -154,7 +154,7 @@ int main() {
                         printf("\n*****  node[%d] is not in here.  *****\n",x);
                         break;
                     }
-                    delete(x);
+                    delete_node(x);
                 }
                 break;
 
@@ -212,7 +212,8 @@ void max_heapify(int i) {
  */
 
 void build_max_heap() {
-    for(int i = size/2; i >= 1; i--)
+    int i;
+    for(i = size/2; i >= 1; i--)
         max_heapify(i);
 }
 
@@ -239,7 +240,7 @@ void insert() {
     printf("\n*****  Added (%s, %d) to node[%d]  *****\n",pq[index].key, pq[index].value, index);
 }
 
-void max() {
+void get_max() {
     printf("\n*****  Max element is (%s, %d)  *****\n", pq[ROOT].key,
             pq[ROOT].value);
 }
@@ -279,7 +280,7 @@ void increase_value(int x, int value) {
  *
  */ 
 
-void delete(int x) {
+void delete_node(int x) {
     clrscr();
     printf("\n*****  Completely deleted node[%2d] : (%s, %d)  *****\n",x,pq[x].key,pq[x].value);
     swap_pq(&pq[x], &pq[size]);
@@ -295,11 +296,12 @@ void swap_pq(priority_queue * a, priority_queue * b) {
 }
 
 void print_heap() {
+    int i;
     printf("\nCurrent heap size : %d\n\n",size);
     puts("###################################################\n");
     puts("node[##] : (Key, Value) -> (leftChild, rightChild)\n");
     puts("###################################################\n");
-    for(int i=1; i<=size; i++) {
+    for(i=1; i<=size; i++) {
         if(i*2+1 <= size)
             printf("node[%2d] : (%s , %d) -> (%d , %d)\n",i,pq[i].key,pq[i].value,pq[i*2].value,pq[i*2+1].value);
         else if(i*2 <= size)
