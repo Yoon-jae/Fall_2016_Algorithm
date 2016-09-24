@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> 
+#include <conio.h>
 
 #define MAX_SIZE 1001 
 #define ROOT 1
@@ -29,9 +30,6 @@ int get_command();
 
 int is_empty();
 int is_full();
-
-/* Clear console */
-void clrscr();
 
 /* Max heap using array */
 priority_queue pq[MAX_SIZE];
@@ -78,10 +76,13 @@ int main() {
 
     /* Build max heap with input data from text file */
     build_max_heap();
+
+	system ("cls");
     print_heap();
 
     command = get_command();
     while(command != 6) {
+		
         puts("");
         switch(command) {
 
@@ -95,38 +96,39 @@ int main() {
              */
 
             case 1:
-                if(is_full()) {
-                    clrscr();
+                if(is_full())  {
+					system ("cls");
                     puts("\n*****  Heap is full now. *****");
-                } else insert();
+				} else insert();
                 break;
 
             case 2:
-                clrscr();
-                if(is_empty())
+                if(is_empty()) {
+					system ("cls");
                     puts("\n*****  Heap is empty now. *****");
-                else get_max();
+				} else get_max();
                 break;
 
             case 3:
-                clrscr();
-                if(is_empty()) 
+                if(is_empty()) {
+					system ("cls");
                     puts("\n*****  Heap is empty now. *****");
-                else {
+				} else {
                     priority_queue max_element = extract_max();
+					system ("cls");
                     printf("\n*****  Max element (%s, %d) deleted succesfully.  *****\n",max_element.key, max_element.value);
                 }
                 break;
 
             case 4:
                 if(is_empty()) {
-                    clrscr();
+					system ("cls");
                     puts("\n*****  Heap is empty now.  *****");
-                } else {
+				} else {
                     printf("Node number : ");
                     scanf("%d",&x);
                     if(x > size) {
-                        clrscr();
+						system ("cls");
                         printf("*****  node[%d] is not in here.  *****\n",x);
                         break;
                     }
@@ -136,21 +138,21 @@ int main() {
                     if(value > pq[x].value)
                         increase_value(x, value);
                     else {
-                        clrscr();
+						system ("cls");
                         printf("\n*****  Error : It is less than %d !  *****\n",pq[x].value);
-                    }
-                }
+					}
+				}
                 break;
 
             case 5:
                 if(is_empty()) {
-                    clrscr();
+					system ("cls");
                     puts("\n*****  Heap is empty now.  *****");
-                } else {
+				} else {
                     printf("Node number : ");
                     scanf("%d",&x);
                     if(x > size) {
-                        clrscr();
+						system ("cls");
                         printf("\n*****  node[%d] is not in here.  *****\n",x);
                         break;
                     }
@@ -236,13 +238,13 @@ void insert() {
         swap_pq(&pq[index], &pq[index/2]);
         index /= 2;
     }
-    clrscr();
+	system ("cls");
     printf("\n*****  Added (%s, %d) to node[%d]  *****\n",pq[index].key, pq[index].value, index);
 }
 
 void get_max() {
-    printf("\n*****  Max element is (%s, %d)  *****\n", pq[ROOT].key,
-            pq[ROOT].value);
+	system ("cls");
+    printf("\n*****  Max element is (%s, %d)  *****\n", pq[ROOT].key, pq[ROOT].value);
 }
 
 /*
@@ -265,7 +267,7 @@ priority_queue extract_max() {
  */
 
 void increase_value(int x, int value) {
-    clrscr();
+	system ("cls");
     printf("\n***** node[%2d] : (%s, %d) changed to ",x, pq[x].key, pq[x].value);
     pq[x].value = value;
     while((x > ROOT) && (pq[x].value > pq[x/2].value)) {
@@ -281,7 +283,7 @@ void increase_value(int x, int value) {
  */ 
 
 void delete_node(int x) {
-    clrscr();
+	system ("cls");
     printf("\n*****  Completely deleted node[%2d] : (%s, %d)  *****\n",x,pq[x].key,pq[x].value);
     swap_pq(&pq[x], &pq[size]);
     size--;
@@ -334,6 +336,7 @@ void print_heap_in_tree(int node, int l) {
 
 int get_command() {
     int command;
+	char ch;
     puts("\n=============================");
     puts("    Enter command key..\n");
     printf("1. Add elements(Key, Value)\n");
@@ -343,7 +346,8 @@ int get_command() {
     printf("5. Delete node[x]\n");
     printf("6. Exit\n");
     puts("=============================");
-    scanf("%d",&command);
+	ch = getch();
+	command = ch - '0';
     return command;
 }
 
@@ -353,13 +357,4 @@ int is_empty() {
 
 int is_full() {
     return (size == MAX_SIZE);
-}
-
-/*
- * Clear console.
- *
- */
-
-void clrscr() {
-    system("clear");
 }
