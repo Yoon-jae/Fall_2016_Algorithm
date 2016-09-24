@@ -33,10 +33,12 @@ int is_full();
 /* Clear console */
 void clrscr();
 
+/* Max heap using array */
 priority_queue pq[MAX_SIZE];
 int size;
 
 int main() {
+
     char * input_file_name = "data03.txt";
 
     FILE * fp = fopen(input_file_name,"rt");
@@ -74,6 +76,7 @@ int main() {
 
     }
 
+    /* Build max heap with input data from text file */
     build_max_heap();
     print_heap();
 
@@ -81,14 +84,16 @@ int main() {
     while(command != 6) {
         puts("");
         switch(command) {
+
             /*
-               printf("1. Add elements(Key, Value)\n");
-               printf("2. Get max element\n");
-               printf("3. Extract max element\n");
-               printf("4. Increase value in node[x]\n");
-               printf("5. Delete node[x]\n");
-               printf("6. Exit\n");
-               */
+             * 1. Add element(Key, Value).
+             * 2. Get max element.
+             * 3. Extract max element.
+             * 4. Increase value in node[x].
+             * 5. Delete node[x].
+             * 6. Exit program.
+             */
+
             case 1:
                 if(is_full()) {
                     clrscr();
@@ -178,6 +183,11 @@ int read_int(char ch, FILE * fp) {
     return digit;
 }
 
+/*
+ * Find bigger child value and swap element and trikling down while condition is true.
+ *
+ */
+
 void max_heapify(int i) {
     int l = i * 2;
     int r = i * 2 + 1;
@@ -194,10 +204,24 @@ void max_heapify(int i) {
     }
 }
 
+/*
+ * Build max heap with input data from text file.
+ *
+ * Start from node[n/2], which has last node as a child.
+ *
+ */
+
 void build_max_heap() {
     for(int i = size/2; i >= 1; i--)
         max_heapify(i);
 }
+
+/*
+ * Insert an element with key, value at last node.
+ *
+ * And swap with parent while condition is true.
+ *
+ */
 
 void insert() {
     int index = ++size;
@@ -220,6 +244,11 @@ void max() {
             pq[ROOT].value);
 }
 
+/*
+ * Extract max element from heap and heapfiy root element.
+ *
+ */
+
 priority_queue extract_max() {
     priority_queue element = pq[ROOT];
     swap_pq(&pq[ROOT], &pq[size--]);
@@ -228,6 +257,11 @@ priority_queue extract_max() {
 
     return element;
 }
+
+/*
+ * Increase value in node[x] and swap element with parent.
+ *
+ */
 
 void increase_value(int x, int value) {
     clrscr();
@@ -239,6 +273,11 @@ void increase_value(int x, int value) {
     }
     printf("node[%2d] : (%s, %d)  *****\n",x, pq[x].key, pq[x].value);
 }
+
+/*
+ * Delete node[x] and swap with last element, then heapify node[x]
+ *
+ */ 
 
 void delete(int x) {
     clrscr();
@@ -274,6 +313,11 @@ void print_heap() {
     print_heap_in_tree(ROOT, 0);
 }
 
+/*
+ * Print binary tree in console.
+ *
+ */
+
 void print_heap_in_tree(int node, int l) {
 
     int i;
@@ -308,6 +352,11 @@ int is_empty() {
 int is_full() {
     return (size == MAX_SIZE);
 }
+
+/*
+ * Clear console.
+ *
+ */
 
 void clrscr() {
     system("clear");
