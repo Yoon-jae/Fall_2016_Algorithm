@@ -8,7 +8,7 @@
 4. 3-way Merge sort
 
 ### [hw 02](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw02%5D)
-Max heap with following function.
+#### Max heap with following functions
 1. Bulid max heap
 2. Max heapify
 3. Add elment
