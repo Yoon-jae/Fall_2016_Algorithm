@@ -1,4 +1,6 @@
-## Max heap with following functions
+## Contents
+
+#### Max heap with following functions
 1. Bulid max heap
 2. Max heapify
 3. Add elment
