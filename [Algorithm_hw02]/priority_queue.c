@@ -24,6 +24,7 @@ void delete(int x);
 
 void swap_pq(priority_queue * a, priority_queue * b);
 void print_heap();
+void print_heap_in_tree(int node, int l);
 int get_command();
 
 int is_empty();
@@ -74,8 +75,8 @@ int main() {
     print_heap();
 
     command = get_command();
-
     while(command != 6) {
+        puts("");
         switch(command) {
             /*
                printf("1. Add elements(Key, Value)\n");
@@ -84,7 +85,7 @@ int main() {
                printf("4. Increase value in node[x]\n");
                printf("5. Delete node[x]\n");
                printf("6. Exit\n");
-             */
+               */
             case 1:
                 if(is_full())
                     puts("#####  Heap is full now. #####");
@@ -107,26 +108,37 @@ int main() {
                 break;
 
             case 4:
-                printf("Node number : ");
-                scanf("%d",&x);
-                if(x > size) {
-                    printf("#####  node[%d] is not in here. #####\n",x);
-                    break;
-                }
-                printf("New value of node[%d] (more than %d): ", x, pq[x].value);
-                scanf("%d",&value);
+                if(is_empty()) 
+                    puts("#####  Heap is empty now. #####");
+                else {
+                    printf("Node number : ");
+                    scanf("%d",&x);
+                    if(x > size) {
+                        printf("#####  node[%d] is not in here. #####\n",x);
+                        break;
+                    }
+                    printf("New value of node[%d] (more than %d): ", x, pq[x].value);
+                    scanf("%d",&value);
 
-                increase_value(x, value);
+                    if(value > pq[x].value)
+                        increase_value(x, value);
+                    else
+                        printf("Error : It is less than %d !\n",pq[x].value);
+                }
                 break;
 
             case 5:
-                printf("Node number : ");
-                scanf("%d",&x);
-                if(x > size) {
-                    printf("#####  node[%d] is not in here. #####\n",x);
-                    break;
+                if(is_empty()) 
+                    puts("#####  Heap is empty now. #####");
+                else {
+                    printf("Node number : ");
+                    scanf("%d",&x);
+                    if(x > size) {
+                        printf("#####  node[%d] is not in here. #####\n",x);
+                        break;
+                    }
+                    delete(x);
                 }
-                delete(x);
                 break;
 
             case 6:
@@ -227,9 +239,10 @@ void swap_pq(priority_queue * a, priority_queue * b) {
 }
 
 void print_heap() {
-    puts("#####  Here is current elements in Max_heap. #####\n");
     printf("Current heap size : %d\n\n",size);
-    puts("node[##] : (Key, Value) -> (leftChild, rightChild)");
+    puts("###################################################\n");
+    puts("node[##] : (Key, Value) -> (leftChild, rightChild)\n");
+    puts("###################################################\n");
     for(int i=1; i<=size; i++) {
         if(i*2+1 <= size)
             printf("node[%2d] : (%s , %d) -> (%d , %d)\n",i,pq[i].key,pq[i].value,pq[i*2].value,pq[i*2+1].value);
@@ -238,11 +251,27 @@ void print_heap() {
         else
             printf("node[%2d] : (%s , %d)\n",i,pq[i].key,pq[i].value);
     }
+
+    puts("\nDisplaying heap structure..");
+    puts("\nROOT - - - - - - - - - - - - - - - - > \n");
+    print_heap_in_tree(ROOT, 0);
+}
+
+void print_heap_in_tree(int node, int l) {
+
+    int i;
+
+    if(node > size) return;
+
+    print_heap_in_tree(node*2+1, l+1);
+    for(i=0; i<l; i++) printf("     ");
+    printf("%3d\n", pq[node].value);
+    print_heap_in_tree(node*2, l+1);
 }
 
 int get_command() {
     int command;
-    puts("=============================");
+    puts("\n=============================");
     puts("    Enter command key..\n");
     printf("1. Add elements(Key, Value)\n");
     printf("2. Get max element\n");
