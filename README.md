@@ -1,5 +1,5 @@
 # [Fall, 2016] CNU Algorithm Class
-### Development tools : Visual Studio 2010
+### Development tools : Visual Studio 2010, IntelliJ
 ### Contents
 #### [hw 01](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw01%5D)
 1. Insertion sort
