@@ -13,6 +13,12 @@ local.properties
 .loadpath
 .recommenders
 
+./out
+*/.out
+
+*.iml
+*/.iml
+
 .idea
 *./idea
 
