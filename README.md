@@ -16,3 +16,9 @@
 5. Pop max element
 6. Increase value in node[x]
 7. Delete node[x]
+
+#### [hw 03](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw03%5D)
+1. QuickSort
+2. Partition
+3. QuickSort_withRandom
+4. Randomized_partition
