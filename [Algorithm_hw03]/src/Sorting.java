@@ -16,6 +16,12 @@ public class Sorting {
         this.size = 0;
     }
 
+    /**
+     * Get pivot value from partition and call recursively quickSort function.
+     *
+     * @param left
+     * @param right
+     */
     public void quickSort(int left, int right) {
         if (left < right) {
             int pivot = partition(left, right);
@@ -24,6 +30,13 @@ public class Sorting {
         }
     }
 
+    /**
+     * Pivot is most right value of array.
+     *
+     * @param left
+     * @param right
+     * @return New pivot index
+     */
     private int partition(int left, int right) {
 
         int pivot = this.digits[right];
@@ -39,16 +52,25 @@ public class Sorting {
         return i;
 
         /*
+        int pivot = this.digits[left];
+        int up = left;
+        int down = right + 1;
         do {
             do up++; while (this.digits[up] < pivot && up <= this.size);
             do down--; while (this.digits[down] > pivot && down >= 1);
             if (up < down) swap(up, down);
         } while (up < down);
-
+        swap(left, down);
         return down;
         */
     }
 
+    /**
+     * Get random pivot value from randomizedPartition and call recursively quickSort_withRandom function.
+     *
+     * @param left
+     * @param right
+     */
     public void quickSort_withRandom(int left, int right) {
         if (left < right) {
             int randomPivot = randomizedPartition(left, right);
@@ -57,6 +79,15 @@ public class Sorting {
         }
     }
 
+    /**
+     * Get three random number and extract mid value.
+     * And swap it with most right index.
+     * Then call partition function.
+     *
+     * @param left
+     * @param right
+     * @return New randomized pivot index
+     */
     private int randomizedPartition(int left, int right) {
         Random random = new Random();
 
@@ -92,6 +123,9 @@ public class Sorting {
         this.digits[b] = temp;
     }
 
+    /**
+     * Test for small size of array.
+     */
     public void defaultNumberSetting() {
         this.digits[1] = 10;
         this.digits[2] = 1;
