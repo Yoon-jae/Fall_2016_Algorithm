@@ -6,9 +6,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Angle angle = new Angle();
-        String time[] = angle.getTimeFromCommand();
-        angle.calculatingAngle(Integer.parseInt(time[0]),Integer.parseInt(time[1]));
 
-        System.out.println(angle);
+        angle.getTimeFromCommand();
+        angle.calculatingAngle();
+        angle.printCurrentAngle();
     }
 }
