@@ -29,6 +29,6 @@ public class Angle {
     public void printCurrentAngle() {
         System.out.printf("\nHour angle : %.1f\n",this.hourAngle);
         System.out.printf("Minute angle : %.1f\n",this.minuteAngle);
-        System.out.printf("Clock angle : %.1f\n",Math.abs((this.hourAngle - this.minuteAngle)));
+        System.out.printf("Clock angle : %.1f\n",Math.abs((this.hourAngle - this.minuteAngle)) % 180);
     }
 }
