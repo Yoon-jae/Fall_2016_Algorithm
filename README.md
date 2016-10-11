@@ -22,3 +22,8 @@
 2. Partition
 3. QuickSort_withRandom
 4. Randomized_partition
+
+#### [hw 04](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw04%5D)
+1. Calculate clock angle
+2. N's log floor function
+3. Big N's log floor function using binary search
