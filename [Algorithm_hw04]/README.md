@@ -4,4 +4,4 @@
 3. Big N's log floor function using binary search
 
 ## Paper link
-[hw04_paper](ihttps://www.dropbox.com/s/pd8nknbsmru2992/hw04-%EB%B3%B4%EA%B3%A0%EC%84%9C_01_201202154.pdf?dl=0)
+[hw04_paper](https://www.dropbox.com/s/pd8nknbsmru2992/hw04-%EB%B3%B4%EA%B3%A0%EC%84%9C_01_201202154.pdf?dl=0)
