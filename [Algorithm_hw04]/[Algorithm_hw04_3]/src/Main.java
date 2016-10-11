@@ -21,10 +21,10 @@ public class Main {
         // Store 2^n value in array.
         bigArray[e] = k;
 
-        int prevIndex = 0 , curIndex = 0;
+        int prevIndex = 0, curIndex = 0;
         BigInteger prevValue = null, curValue = null;
 
-        while(k.compareTo(n) <= 0) {
+        while (k.compareTo(n) <= 0) {
             prevIndex = e;
             prevValue = k;
 
@@ -47,10 +47,10 @@ public class Main {
     /**
      * Get value from binary search with stored BigInteger array and prev, cur index.
      *
-     * @param n : Key value (User input data)
+     * @param n        : Key value (User input data)
      * @param bigArray : Stored BigInteger array
-     * @param left : Start index
-     * @param right : End index
+     * @param left     : Start index
+     * @param right    : End index
      * @return
      */
     private static int binarySeacrhForBigInteger(BigInteger n, BigInteger[] bigArray, int left, int right) {
@@ -63,7 +63,7 @@ public class Main {
         while (true) {
 
             // Exit case
-            if(left > right) {
+            if (left > right) {
                 e = left;
                 break;
             }
@@ -72,7 +72,7 @@ public class Main {
             diffIndex = (right - left) / 2;
 
             // Exit case
-            if(diffIndex == 0) {
+            if (diffIndex == 0) {
                 e = left;
                 break;
             }
@@ -83,9 +83,9 @@ public class Main {
             // Store 2^n value in array.
             bigArray[midIndex] = midValue;
 
-            if(midValue.compareTo(n) < 0) {
+            if (midValue.compareTo(n) < 0) {
                 left = midIndex;
-            } else if(midValue.compareTo(n) > 0) {
+            } else if (midValue.compareTo(n) > 0) {
                 right = midIndex;
             } else {
                 e = midIndex;
