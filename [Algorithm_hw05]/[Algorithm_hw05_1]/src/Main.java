@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        Fibonacci fibo = new Fibonacci();
         BigInteger n = BigInteger.valueOf(90);
         int command = 0;
 
@@ -17,26 +16,30 @@ public class Main {
 
             if(command == 4) break;
 
-            System.out.println("==========================================================");
+            printDivisionLine();
             switch (command) {
                 case 1:
-                    recursion(fibo, n);
+                    recursion(n);
                     break;
 
                 case 2:
-                    array(fibo, n);
+                    array(n);
                     break;
 
                 case 3:
-                    recursiveSquaring(fibo, n);
+                    recursiveSquaring(n);
                     break;
 
                 default:
                     break;
             }
-            System.out.println("==========================================================");
+            printDivisionLine();
         }
 
+    }
+
+    private static void printDivisionLine() {
+        System.out.println("==========================================================");
     }
 
     private static void printManual() {
@@ -47,45 +50,47 @@ public class Main {
         System.out.println("4. Exit");
     }
 
-    private static void recursiveSquaring(Fibonacci fibo, BigInteger n) {
+    private static void recursiveSquaring(BigInteger n) {
         long start;
         BigInteger value;
         long end;
         System.out.println("Recursive squaring !");
         for(BigInteger i = BigInteger.ZERO; i.compareTo(n) <= 0; i = i.add(BigInteger.ONE)) {
             start = System.nanoTime();
-            value = fibo.fibonacciUsingRecursiveSquaring(i);
+            value = Fibonacci.usingRecursiveSquaring(i);
             end = System.nanoTime();
-            System.out.printf("Fibonacci(%2d) : %20d", i, value );
-            System.out.println(", Elapsed time : " + (double) (end - start) / 1000000000.0);
+            printValueAndElapsedTime(start, value, end, i);
         }
     }
 
-    private static void array(Fibonacci fibo, BigInteger n) {
+    private static void array(BigInteger n) {
         long start;
         BigInteger value;
         long end;
         System.out.println("Array !");
         for(BigInteger i = BigInteger.ZERO; i.compareTo(n) <= 0; i = i.add(BigInteger.ONE)) {
             start = System.nanoTime();
-            value = fibo.fibonacciUsingArray(i);
+            value = Fibonacci.usingArray(i);
             end = System.nanoTime();
-            System.out.printf("Fibonacci(%2d) : %20d", i, value );
-            System.out.println(", Elapsed time : " + (double) (end - start) / 1000000000.0);
+            printValueAndElapsedTime(start, value, end, i);
         }
     }
 
-    private static void recursion(Fibonacci fibo, BigInteger n) {
+    private static void recursion(BigInteger n) {
         long start;
         BigInteger value;
         long end;
         System.out.println("Recursion !");
         for(BigInteger i = BigInteger.ZERO; i.compareTo(n) <= 0; i = i.add(BigInteger.ONE)) {
             start = System.nanoTime();
-            value = fibo.fibonacciUsingRecursion(i);
+            value = Fibonacci.usingRecursion(i);
             end = System.nanoTime();
-            System.out.printf("Fibonacci(%2d) : %20d", i, value );
-            System.out.println(", Elapsed time : " + (double) (end - start) / 1000000000.0);
+            printValueAndElapsedTime(start, value, end, i);
         }
+    }
+
+    private static void printValueAndElapsedTime(long start, BigInteger value, long end, BigInteger i) {
+        System.out.printf("Fibonacci(%2d) : %20d", i, value );
+        System.out.printf(", Elapsed time : %.10f\n", (double) (end - start) / 1000000000.0);
     }
 }

@@ -5,26 +5,25 @@ import java.math.BigInteger;
  */
 public class Fibonacci {
 
-    public BigInteger fibonacciUsingRecursion(BigInteger n) {
+    public static BigInteger usingRecursion(BigInteger n) {
+
         if (n.equals(BigInteger.ZERO))
             return BigInteger.ZERO;
 
         if (n.equals(BigInteger.ONE))
             return BigInteger.ONE;
 
-        return fibonacciUsingRecursion(n.subtract(BigInteger.ONE))
-                .add(fibonacciUsingRecursion(n.subtract(BigInteger.valueOf(2))));
+        return usingRecursion(n.subtract(BigInteger.ONE))
+                .add(usingRecursion(n.subtract(BigInteger.valueOf(2))));
     }
 
-    public BigInteger fibonacciUsingArray(BigInteger n) {
+    public static BigInteger usingArray(BigInteger n) {
 
-        if (n.equals(BigInteger.ZERO)) {
+        if (n.equals(BigInteger.ZERO))
             return BigInteger.ZERO;
-        }
 
-        if (n.equals(BigInteger.ONE)) {
+        if (n.equals(BigInteger.ONE))
             return BigInteger.ONE;
-        }
 
         BigInteger a = BigInteger.ZERO;
         BigInteger b = BigInteger.ONE;
@@ -39,8 +38,31 @@ public class Fibonacci {
         return c;
     }
 
-    public BigInteger fibonacciUsingRecursiveSquaring(BigInteger n) {
+    public static BigInteger usingRecursiveSquaring(BigInteger n) {
 
-        return null;
+        BigInteger[][] fibonacciMatrix = new BigInteger[][]{{BigInteger.ONE, BigInteger.ONE}, {BigInteger.ONE, BigInteger.ZERO}};
+        BigInteger[][] retMatrix = new BigInteger[][]{{BigInteger.ONE, BigInteger.ZERO}, {BigInteger.ZERO, BigInteger.ONE}};
+
+        while (n.compareTo(BigInteger.ZERO) > 0) {
+            if (n.remainder(BigInteger.valueOf(2)).equals(BigInteger.ONE))
+                retMatrix = multiplyMatrix(retMatrix, fibonacciMatrix);
+
+            fibonacciMatrix = multiplyMatrix(fibonacciMatrix, fibonacciMatrix);
+            n = n.divide(BigInteger.valueOf(2));
+        }
+
+        return retMatrix[0][1];
+    }
+
+    private static BigInteger[][] multiplyMatrix(BigInteger[][] a, BigInteger[][] b) {
+
+        BigInteger[][] zeroMatrix = new BigInteger[][]{{BigInteger.ZERO, BigInteger.ZERO}, {BigInteger.ZERO, BigInteger.ZERO}};
+        int arraySize = a.length;
+        for (int i = 0; i < arraySize; i++)
+            for (int j = 0; j < arraySize; j++)
+                for (int k = 0; k < arraySize; k++)
+                    zeroMatrix[i][j] = zeroMatrix[i][j].add(a[i][k].multiply(b[k][j]));
+
+        return zeroMatrix;
     }
 }
