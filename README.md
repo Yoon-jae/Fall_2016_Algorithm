@@ -27,3 +27,11 @@
 1. Calculate clock angle
 2. N's log floor function
 3. Big N's log floor function using binary search
+
+#### [hw 05](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw05%5D)
+1. Fibonacci function (Recursion, Array, Recursive squaring)
+2. Skyline
+
+#### [hw 06](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw06%5D)
+1. Counting inversions
+2. Closest pair
