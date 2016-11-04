@@ -26,19 +26,28 @@ public class Main {
 
         initDistAndWeightArray(INF, numOfVertex, startPoint, d, w);
 
-        for (int i = 1; i <= numOfEdge; i++) {
-            stk = new StringTokenizer(br.readLine());
-            char from = stk.nextToken().charAt(0);
-            char to = stk.nextToken().charAt(0);
-            int weight = Integer.parseInt(stk.nextToken());
-            w[charToNum(from)][charToNum(to)] = weight;
-            System.out.println("Edge[" + i + "] : " + from + ", " + to + ", " + weight);
-        }
+        inputWeightedGraph(br, numOfEdge, w);
 
-        System.out.println();
-        System.out.println("Result of Dijkstra algorithm...\n");
+        System.out.println("\nResult of Dijkstra algorithm...\n");
 
-        PriorityQueue<Edge> pQueue = new PriorityQueue<>();
+        dijkstra(INF, numOfVertex, startPoint, d, w);
+
+        printDist(numOfVertex, d);
+
+        br.close();
+    }
+
+    /**
+     * Dijkstra algorithm using min heap.
+     *
+     * @param INF
+     * @param numOfVertex
+     * @param startPoint
+     * @param d
+     * @param w
+     */
+    private static void dijkstra(int INF, int numOfVertex, char startPoint, int[] d, int[][] w) {
+        MinHeap pQueue = new MinHeap();
         pQueue.add(new Edge(startPoint, 0));
 
         while (!pQueue.isEmpty()) {
@@ -56,11 +65,23 @@ public class Main {
             }
             System.out.println();
         }
+    }
 
+    private static void inputWeightedGraph(BufferedReader br, int numOfEdge, int[][] w) throws IOException {
+        StringTokenizer stk;
+        for (int i = 1; i <= numOfEdge; i++) {
+            stk = new StringTokenizer(br.readLine());
+            char from = stk.nextToken().charAt(0);
+            char to = stk.nextToken().charAt(0);
+            int weight = Integer.parseInt(stk.nextToken());
+            w[charToNum(from)][charToNum(to)] = weight;
+            System.out.println("Edge[" + i + "] : " + from + ", " + to + ", " + weight);
+        }
+    }
+
+    private static void printDist(int numOfVertex, int[] d) {
         for (int i = 1; i <= numOfVertex; i++)
             System.out.printf("d[%c] : %d\n", numToChar(i), d[i]);
-
-        br.close();
     }
 
     private static void initDistAndWeightArray(int INF, int numOfVertex, char startPoint, int[] d, int[][] w) {
@@ -76,36 +97,32 @@ public class Main {
         }
     }
 
+    /**
+     * Index number to char function.
+     *
+     * Eg)
+     * 1 -> A
+     * 2 -> B
+     *
+     * @param num
+     * @return
+     */
     public static char numToChar(int num) {
         return (char) (num + '0' + 16);
     }
 
+
+    /**
+     * Char to index number function.
+     *
+     * Eg)
+     * A -> 1
+     * B -> 2
+     *
+     * @param ch
+     * @return
+     */
     public static int charToNum(char ch) {
         return ch - '0' - 16;
-    }
-}
-
-class Edge implements Comparable<Edge> {
-    char to;
-    int weight;
-
-    public Edge(char to, int weight) {
-        this.to = to;
-        this.weight = weight;
-    }
-
-    @Override
-    public String toString() {
-        return "Edge{" +
-                "to=" + to +
-                ", weight=" + weight +
-                '}';
-    }
-
-    @Override
-    public int compareTo(Edge edge) {
-        if (this.weight < edge.weight)
-            return -1;
-        else return 1;
     }
 }
