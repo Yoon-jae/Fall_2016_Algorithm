@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 /**
@@ -23,35 +22,29 @@ public class Main {
 
         int[] d = new int[numOfVertex + 1];
         int[][] w = new int[numOfVertex + 1][numOfVertex + 1];
+        boolean[] visited = new boolean[numOfVertex + 1];
 
-        initDistAndWeightArray(INF, numOfVertex, startPoint, d, w);
+        initValue(INF, numOfVertex, startPoint, d, w, visited);
 
         inputWeightedGraph(br, numOfEdge, w);
 
         System.out.println("\nResult of Dijkstra algorithm...\n");
 
-        dijkstra(INF, numOfVertex, startPoint, d, w);
+        dijkstra(INF, numOfVertex, startPoint, d, w, visited);
 
         printDist(numOfVertex, d);
 
         br.close();
     }
 
-    /**
-     * Dijkstra algorithm using min heap.
-     *
-     * @param INF
-     * @param numOfVertex
-     * @param startPoint
-     * @param d
-     * @param w
-     */
-    private static void dijkstra(int INF, int numOfVertex, char startPoint, int[] d, int[][] w) {
+    private static void dijkstra(int INF, int numOfVertex, char startPoint, int[] d, int[][] w, boolean[] visited) {
         MinHeap pQueue = new MinHeap();
         pQueue.add(new Edge(startPoint, 0));
 
         while (!pQueue.isEmpty()) {
             Edge edge = pQueue.poll();
+            if(visited[charToNum(edge.to)]) continue;
+            visited[charToNum(edge.to)] = true;
             int here = charToNum(edge.to);
             System.out.println("S <- " + edge);
             for (int to = 1; to <= numOfVertex; to++) {
@@ -64,6 +57,23 @@ public class Main {
                 }
             }
             System.out.println();
+        }
+    }
+
+    private static void initValue(int INF, int numOfVertex, char startPoint, int[] d, int[][] w, boolean[] visited) {
+        for (int i = 1; i <= numOfVertex; i++) {
+            if (i == charToNum(startPoint)) continue;
+            d[i] = INF;
+        }
+
+        for (int i = 1; i <= numOfVertex; i++) {
+            for (int j = 1; j < numOfVertex; j++) {
+                w[i][j] = INF;
+            }
+        }
+
+        for (int i = 1; i<= numOfVertex; i++) {
+            visited[i] = false;
         }
     }
 
@@ -82,19 +92,6 @@ public class Main {
     private static void printDist(int numOfVertex, int[] d) {
         for (int i = 1; i <= numOfVertex; i++)
             System.out.printf("d[%c] : %d\n", numToChar(i), d[i]);
-    }
-
-    private static void initDistAndWeightArray(int INF, int numOfVertex, char startPoint, int[] d, int[][] w) {
-        for (int i = 1; i <= numOfVertex; i++) {
-            if (i == charToNum(startPoint)) continue;
-            d[i] = INF;
-        }
-
-        for (int i = 1; i <= numOfVertex; i++) {
-            for (int j = 1; j < numOfVertex; j++) {
-                w[i][j] = INF;
-            }
-        }
     }
 
     /**
