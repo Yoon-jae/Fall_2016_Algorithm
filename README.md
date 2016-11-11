@@ -38,3 +38,7 @@
 
 #### [hw 07](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw07%5D)
 1. Dijkstra algorithm using priority queue
+
+#### [hw 08](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw08%5D)
+1. Minimum spanning tree using Prim's algorithm
+2. Huffman encoding, decoding
