@@ -30,14 +30,14 @@ public class Main {
 
         inputWeightedGraph(br, numOfEdge, w);
 
-        int mstCost = getMinimumSpanningTree(numOfVertex, startPoint, w, visited);
+        int mstCost = getMSTUsingPrims(numOfVertex, startPoint, w, visited);
 
         System.out.println("\nw<MST> : " + mstCost);
 
 
     }
 
-    private static int getMinimumSpanningTree(int numOfVertex, char startPoint, int[][] w, boolean[] visited) {
+    private static int getMSTUsingPrims(int numOfVertex, char startPoint, int[][] w, boolean[] visited) {
         MinHeap minHeap = new MinHeap();
         minHeap.add(new Edge(0, charToNum(startPoint), 0));
 
