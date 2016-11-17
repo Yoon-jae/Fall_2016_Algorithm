@@ -42,3 +42,6 @@
 #### [hw 08](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw08%5D)
 1. Minimum spanning tree using Prim's algorithm
 2. Huffman encoding, decoding
+
+#### [hw 09](https://github.com/Yoon-jae/Fall_2016_Algorithm/tree/master/%5BAlgorithm_hw09%5D)
+1. Napsack problem Using Dynamic Programming
